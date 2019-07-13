@@ -205,24 +205,14 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    var fiesta;
-    var qr = new QRReader();
-    const img = jimp.read(fs.readFile(attachment_url, function(err, data) {
-    	var fileData = new Buffer(data).toString('base64')
-    	return data;
-    }))
-    const value = new Promise((resolve, reject) => {
-    	qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
-	    qr.decode(img.bitmap);
-	});
-	console.log(value)
+    var fiesta = readQR(attachment_url);
     response = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": "Quieres unirte a la fiesta?",
+            "title": "Quieres unirte a la fiesta?" + fiesta,
             "subtitle": "Tap a button to answer.",
             "image_url": attachment_url,
             "buttons": [
@@ -287,3 +277,9 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
+function readQR(url) {
+	request.get("http://api.qrserver.com/v1/read-qr-code/?fileurl=" + decodeURIComponent(url))
+		.on('response', function(res) {
+			console.log(res)
+		})
+}
