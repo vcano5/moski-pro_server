@@ -123,6 +123,7 @@ app.post('/webhook', function(req, res){
 		console.log('')
 		console.log(body.entry[0].messaging[0].message.text);
 		console.log('')
+		console.log('nlp', JSON.stringify(body.entry[0].messaging[0].message.nlp))
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
 		//console.log(body)
