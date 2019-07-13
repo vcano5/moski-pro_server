@@ -8,6 +8,8 @@ const express = require('express'),
 
 var sesiones = [];
 
+console.log(process.env.PAGE_ACCESS_TOKEN)
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 
@@ -143,7 +145,7 @@ app.post('/webhook', function(req, res){
 })
 
 function callSendAPI(sender_psid, response) {
-	console.log('El NE NE')
+	console.log('El NE NE', process.env.PAGE_ACCESS_TOKEN)
   // Construct the message body
   let request_body = {
     "recipient": {
