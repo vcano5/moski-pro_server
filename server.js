@@ -122,11 +122,9 @@ app.post('/webhook', function(req, res){
 		//console.log(body.entry[0].messaging)
 		res.status(200).send('EVENT_RECEIVED')
 		console.log('--------------')
-		console.log('Nuevo mensaje')
 		console.log('')
 		console.log(body.entry[0].messaging[0].message.text);
 		console.log('')
-		console.log('nlp', JSON.stringify(body.entry[0].messaging[0].message.nlp))
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
 		//console.log(body)
@@ -136,7 +134,7 @@ app.post('/webhook', function(req, res){
 		      "text": `You sent the message: "${received_message.text}". Now send me an image!`
 		    }
 		    let sender_psid = mensaje[0].sender.id;
-		    console.log(response, sender_psid)
+		    console.log('Buneas', response, sender_psid)
 			callSendAPI(sender_psid, response)
 		}
 	}
