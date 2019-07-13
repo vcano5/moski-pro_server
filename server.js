@@ -9,18 +9,16 @@ var sesiones = [];
 
 app.use(cookieParser());
 
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
 	var cookie = req.cookies.sesion;
 	if(cookie === undefined) {
 		//res.sendStatus(403);
 		res.redirect('/Ilogin')
-		/*
-		var randomNumber = Math.random().toString();
-		randomNumber = randomNumber.substring(2, randomNumber.length);
-		console.log(randomNumber)
-		res.cookie('sesion', randomNumber, {maxAge: 900000, httpOnly: true});
-		console.log('Cookie created successfully');
-		*/
+		//var randomNumber = Math.random().toString();
+		//randomNumber = randomNumber.substring(2, randomNumber.length);
+		//console.log(randomNumber)
+		//res.cookie('sesion', randomNumber, {maxAge: 900000, httpOnly: true});
+		//console.log('Cookie created successfully');
 	}
 	else {
 		var long = sesiones.length;
@@ -35,10 +33,11 @@ app.use(function(req, res, next) {
 			res.send('Tu sesion caduco')
 			res.clearCookie('sesion')
 		}
-		//console.log('Cookie exists', cookie);
 	}
 	next();
 })
+
+*/
 
 app.use(express.static(__dirname + '/public'));
 
