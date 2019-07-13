@@ -8,6 +8,7 @@ const express = require('express'),
 var sesiones = [];
 
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 /*app.use(function(req, res, next) {
 	var cookie = req.cookies.sesion;
