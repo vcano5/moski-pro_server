@@ -207,11 +207,11 @@ function handleMessage(sender_psid, received_message) {
     let attachment_url = received_message.attachments[0].payload.url;
     var fiesta;
     var qr = new QRReader();
-    const img = await jimp.read(fs.readFile(attachment_url, function(err, data) {
+    const img = jimp.read(fs.readFile(attachment_url, function(err, data) {
     	var fileData = new Buffer(data).toString('base64')
     	return data;
     }))
-    const value = await new Promise((resolve, reject) => {
+    const value = new Promise((resolve, reject) => {
     	qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
 	    qr.decode(img.bitmap);
 	});
