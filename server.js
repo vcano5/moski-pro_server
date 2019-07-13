@@ -120,6 +120,7 @@ app.post('/webhook', function(req, res){
 		res.status(200).send('EVENT_RECEIVED')
 		console.log(body.entry[0].messaging.message);
 		var mensaje = body.entry[0].messaging;
+		console.log(mensaje)
 		if(mensaje.message.text == 'Registrar') {
 			sesiones[sesiones.lenght] = mensaje.sender.id;
 		}
