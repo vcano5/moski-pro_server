@@ -143,6 +143,7 @@ app.post('/webhook', function(req, res){
 })
 
 function callSendAPI(sender_psid, response) {
+	console.log('El NE NE')
   // Construct the message body
   let request_body = {
     "recipient": {
