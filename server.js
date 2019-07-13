@@ -123,7 +123,7 @@ app.post('/webhook', function(req, res){
 		console.log('')
 		console.log('Nuevo mensaje')
 		console.log('')
-		console.log(body);
+		console.log(body.entry[0].messaging);
 		console.log('')
 		console.log('')
 		console.log('--------------')
