@@ -269,6 +269,15 @@ function callSendAPI(sender_psid, response) {
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
+  	console.log('------- res -------')
+  	console.log(res)
+  	console.log('')
+  	console.log('')
+  	console.log('------- body -------')
+  	console.log(body)
+  	console.log('')
+  	console.log('')
+  	console.log('------- FINAL -------')
     if (!err) {
       console.log('message sent!')
     } else {
@@ -278,8 +287,11 @@ function callSendAPI(sender_psid, response) {
 }
 
 function readQR(url) {
-	request.get("http://api.qrserver.com/v1/read-qr-code/?fileurl=" + decodeURIComponent(url))
+	request
+		.get("http://api.qrserver.com/v1/read-qr-code/?fileurl=" + decodeURIComponent(url))
 		.on('response', function(res) {
 			console.log(res)
 		})
 }
+
+readQR('https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/66043811_2270106686406114_3376674194006736896_n.jpg?_nc_cat=100&_nc_oc=AQkssUOoghOowrpQMzOL1vK7XN7xVS4tWzi06EPNPGLO39S_3BxMzgy_l_kmS4y62BijXs2Aiqw-mqCaFyCLik4l&_nc_ad=z-m&_nc_cid=0&_nc_zor=9&_nc_ht=scontent.xx&oh=ec94afeba0506a49e5f466a051a0ec08&oe=5DA58278')
