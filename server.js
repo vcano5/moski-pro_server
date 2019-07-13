@@ -4,7 +4,11 @@ const express = require('express'),
 	cookieParser = require('cookie-parser'),
 	crypto = require('crypto'),
 	bodyParser = require('body-parser'), 
-	request = require('request');
+	request = require('request'),
+	qrcode = require('qrcode'),
+	fs = require('fs'),
+	jimp = require('jimp'),
+	QRReader = require('qrcode-reader');
 
 var sesiones = [];
 
@@ -201,13 +205,24 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
+    var fiesta;
+    var qr = new QRReader();
+    const img = await jimp.read(fs.readFile(attachment_url, function(err, data) {
+    	var fileData = new Buffer(data).toString('base64')
+    	return data;
+    }))
+    const value = await new Promise((resolve, reject) => {
+    	qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
+	    qr.decode(img.bitmap);
+	});
+	console.log(value)
     response = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": "Is this the right picture?",
+            "title": "Quieres unirte a la fiesta?",
             "subtitle": "Tap a button to answer.",
             "image_url": attachment_url,
             "buttons": [
@@ -271,3 +286,4 @@ function callSendAPI(sender_psid, response) {
     }
   }); 
 }
+
