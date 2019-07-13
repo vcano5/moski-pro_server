@@ -3,7 +3,8 @@ const express = require('express'),
 	mysql = require('mysql')
 	cookieParser = require('cookie-parser'),
 	crypto = require('crypto'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'), 
+	request = require('request');
 
 var sesiones = [];
 
@@ -127,14 +128,44 @@ app.post('/webhook', function(req, res){
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
 		//console.log(body)
-		if(mensaje.message == 'Registrar') {
+		if(mensaje[0].text == 'Registrar') {
 			sesiones[sesiones.lenght] = mensaje.sender.id;
+			response = {
+		      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+		    }
+		    let sender_psid = mensaje[0].sender.id;
+			callSendAPI(sender_psid, response)
 		}
 	}
 	else {
 		res.sendStatus(404);
 	}
 })
+
+function callSendAPI(sender_psid, response) {
+  // Construct the message body
+  let request_body = {
+    "recipient": {
+      "id": sender_psid
+    },
+    "message": response
+  }
+
+  // mensaje
+  request({
+  	"uri": "https://graph.facebook.com/v2.6/me/messages",
+  	"qs": {"access_token": process.env.PAGE_ACCESS_TOKEN},
+  	"method": "POST",
+  	"json": request_body
+  }, function(err, res, body) {
+  	if(!err) {
+  		console.log('Se envio el mensaje')
+  	}
+  	else {
+  		console.log('No se envio el mensaje')
+  	}
+  })
+}
 
 
 function randomID(lenght, callback) {
