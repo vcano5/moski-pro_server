@@ -162,7 +162,7 @@ function callSendAPI(sender_psid, response) {
   	"json": request_body
   }, function(err, res, body) {
   	if(!err) {
-  		console.log('Se envio el mensaje')
+  		console.log('Se envio el mensaje', res, body)
   	}
   	else {
   		console.log('No se envio el mensaje')
