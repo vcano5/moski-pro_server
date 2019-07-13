@@ -119,12 +119,9 @@ app.post('/webhook', function(req, res){
 		//console.log(body.entry[0].messaging)
 		res.status(200).send('EVENT_RECEIVED')
 		console.log('--------------')
-		console.log('')
-		console.log('')
 		console.log('Nuevo mensaje')
 		console.log('')
-		console.log(body.entry[0].messaging);
-		console.log('')
+		console.log(body.entry[0].messaging[0].message.text);
 		console.log('')
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
