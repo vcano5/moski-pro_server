@@ -136,6 +136,7 @@ app.post('/webhook', function(req, res){
 		      "text": `You sent the message: "${received_message.text}". Now send me an image!`
 		    }
 		    let sender_psid = mensaje[0].sender.id;
+		    console.log(response, sender_psid)
 			callSendAPI(sender_psid, response)
 		}
 	}
