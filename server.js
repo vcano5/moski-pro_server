@@ -8,7 +8,6 @@ const express = require('express'),
 
 var sesiones = [];
 
-console.log(process.env.PAGE_ACCESS_TOKEN)
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -124,6 +123,7 @@ app.post('/webhook', function(req, res){
 		console.log('--------------')
 		console.log('')
 		console.log(body.entry[0].messaging[0].message.text);
+		console.log(body.entry[0].messaging[0].sender.id)
 		console.log('')
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
