@@ -123,7 +123,7 @@ app.post('/webhook', function(req, res){
 		console.log('--------------')
 		console.log('')
 		console.log(body.entry[0].messaging[0].message.text);
-		console.log(body.entry[0].messaging[0].sender)
+		console.log(body.entry[0].messaging[0].sender.id)
 		console.log('')
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
@@ -141,6 +141,8 @@ app.post('/webhook', function(req, res){
 		res.sendStatus(404);
 	}
 })
+
+callSendAPI(3092961217388569, 'XDXD');
 
 function callSendAPI(sender_psid, response) {
 	console.log('El NE NE', process.env.PAGE_ACCESS_TOKEN)
