@@ -116,7 +116,7 @@ app.get('/webhook', function(req, res) {
 app.post('/webhook', function(req, res){
 	let body = req.body;
 	if(body.object == 'page') {
-		console.log(body)
+		console.log(body.entry[0].messaging)
 		res.status(200).send('EVENT_RECEIVED')
 		//console.log(body.entry[0].messaging);
 		var mensaje = body.entry[0].messaging;
