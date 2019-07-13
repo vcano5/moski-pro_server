@@ -123,13 +123,12 @@ app.post('/webhook', function(req, res){
 		console.log('--------------')
 		console.log('')
 		console.log(body.entry[0].messaging[0].message.text);
-		console.log(body.entry[0].messaging[0].sender.id)
+		console.log(body.entry[0].messaging[0].sender)
 		console.log('')
 		console.log('--------------')
 		var mensaje = body.entry[0].messaging;
 		//console.log(body)
 		if(mensaje[0].text == 'Registrar') {
-			sesiones[sesiones.lenght] = mensaje.sender.id;
 			response = {
 		      "text": `You sent the message: "${received_message.text}". Now send me an image!`
 		    }
