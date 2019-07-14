@@ -206,7 +206,7 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    analizarQR(attachment_url, function(fiesta) {
+    readQR(attachment_url, function(fiesta) {
       response = {
         "attachment": {
           "type": "template",
@@ -279,21 +279,15 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
-/*function readQR(url) {
-	request
-		.get("http://api.qrserver.com/v1/read-qr-code/?fileurl=" + decodeURIComponent(url))
-		.on('response', function(res) {
-			console.log(res)
-		})
-}*/
 
-async function readQR(uri) {
+async function readQR(uri, callback) {
   const img = await jimp.read(uri);
   const qr = new QRReader();
 
   const value = await new Promise((resolve, reject) => {
     qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
     qr.decode(img.bitmap);
+    callback(value);
   })
 }
 
