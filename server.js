@@ -74,7 +74,15 @@ app.get('/', function(req, res) {
     randomID(8, function(id) {
       console.log(id)
       res.cookie('sesion', id);
-      qrcode.toDataURL(id, function(err, url) {
+      var opts = {
+        errorCorrectionLevel: 'H',
+        type: 'image/jpeg',
+        rendererOpts: {
+          quality: 0.9
+        }
+      }
+      qrcode.toDataURL(id, opts,  function(err, url) {
+        console.log(url)
         res.render('pages/index', {'qrurl': url});
       })
     })
