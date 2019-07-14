@@ -315,3 +315,9 @@ async function analizarQR(url, callback) {
     callback("No es un codigo QR");
   }
 }
+
+app.get('/getQR', function(req, res) {
+  analizarQR(req.query.url, function(valor) {
+    res.status(200).send(valor);
+  })
+})
