@@ -206,34 +206,33 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    var fiesta = analizarQR(attachment_url).then(function(data) {
-      return data;
-    })
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Quieres unirte a la fiesta?" + fiesta,
-            "subtitle": "Tap a button to answer.",
-            "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ],
-          }]
+    analizarQR(attachment_url, function(fiesta) {
+      response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{
+              "title": "Quieres unirte a la fiesta?" + fiesta,
+              "subtitle": "Tap a button to answer.",
+              "image_url": attachment_url,
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ],
+            }]
+          }
         }
       }
-    }
+    })
   } 
   
   // Send the response message
@@ -300,7 +299,7 @@ async function readQR(uri) {
 
 readQR('https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/66043811_2270106686406114_3376674194006736896_n.jpg?_nc_cat=100&_nc_oc=AQkssUOoghOowrpQMzOL1vK7XN7xVS4tWzi06EPNPGLO39S_3BxMzgy_l_kmS4y62BijXs2Aiqw-mqCaFyCLik4l&_nc_ad=z-m&_nc_cid=0&_nc_zor=9&_nc_ht=scontent.xx&oh=ec94afeba0506a49e5f466a051a0ec08&oe=5DA58278')
 
-async function analizarQR(url) {
+async function analizarQR(url, callback) {
   const img = await jimp.read(url)
   const code = jsQR(img, img.bitmat.width, img.bitmat.height);
   if(code) {
@@ -309,9 +308,9 @@ async function analizarQR(url) {
       qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
       qr.decode(img.bitmap);
     })
-    return 'El codigo QR es: ' + value;
+    callback('El codigo QR es: ' + value);
   }
   else {
-    return "No es un codigo QR";
+    callback("No es un codigo QR");
   }
 }
