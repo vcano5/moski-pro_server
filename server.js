@@ -8,7 +8,8 @@ const express = require('express'),
 	qrcode = require('qrcode'),
 	fs = require('fs'),
 	jimp = require('jimp'),
-	QRReader = require('qrcode-reader');
+	QRReader = require('qrcode-reader'),
+  jsQR = require('jsqr');
 
 var sesiones = [];
 
@@ -205,7 +206,7 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    var fiesta = readQR(attachment_url);
+    var fiesta = analizarQR(attachment_url);
     response = {
       "attachment": {
         "type": "template",
@@ -269,15 +270,6 @@ function callSendAPI(sender_psid, response) {
     "method": "POST",
     "json": request_body
   }, (err, res, body) => {
-  	console.log('------- res -------')
-  	console.log(res)
-  	console.log('')
-  	console.log('')
-  	console.log('------- body -------')
-  	console.log(body)
-  	console.log('')
-  	console.log('')
-  	console.log('------- FINAL -------')
     if (!err) {
       console.log('message sent!')
     } else {
@@ -286,12 +278,38 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
-function readQR(url) {
+/*function readQR(url) {
 	request
 		.get("http://api.qrserver.com/v1/read-qr-code/?fileurl=" + decodeURIComponent(url))
 		.on('response', function(res) {
 			console.log(res)
 		})
+}*/
+
+async function readQR(uri) {
+  const img = await jimp.read(uri);
+  const qr = new QRReader();
+
+  const value = await new Promise((resolve, reject) => {
+    qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
+    qr.decode(img.bitmap);
+  })
 }
 
 readQR('https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/66043811_2270106686406114_3376674194006736896_n.jpg?_nc_cat=100&_nc_oc=AQkssUOoghOowrpQMzOL1vK7XN7xVS4tWzi06EPNPGLO39S_3BxMzgy_l_kmS4y62BijXs2Aiqw-mqCaFyCLik4l&_nc_ad=z-m&_nc_cid=0&_nc_zor=9&_nc_ht=scontent.xx&oh=ec94afeba0506a49e5f466a051a0ec08&oe=5DA58278')
+
+await function analizarQR(url) {
+  const img = await jimp.read(url)
+  const code = jsQR(img, img.bitmat.width, img.bitmat.height);
+  if(code) {
+    const qr = new QRReader();
+    const value = await new Promise((resolve, reject) => {
+      qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
+      qr.decode(img.bitmap);
+    })
+    return 'El codigo QR es: ' + value;
+  }
+  else {
+    return "No es un codigo QR";
+  }
+}
