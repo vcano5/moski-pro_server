@@ -287,8 +287,9 @@ async function readQR(uri, callback) {
   const value = await new Promise((resolve, reject) => {
     qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
     qr.decode(img.bitmap);
-    callback(value);
   })
+  console.log(value)
+  callback(value);
 }
 
 readQR('https://scontent.xx.fbcdn.net/v/t1.15752-0/p480x480/66043811_2270106686406114_3376674194006736896_n.jpg?_nc_cat=100&_nc_oc=AQkssUOoghOowrpQMzOL1vK7XN7xVS4tWzi06EPNPGLO39S_3BxMzgy_l_kmS4y62BijXs2Aiqw-mqCaFyCLik4l&_nc_ad=z-m&_nc_cid=0&_nc_zor=9&_nc_ht=scontent.xx&oh=ec94afeba0506a49e5f466a051a0ec08&oe=5DA58278')
