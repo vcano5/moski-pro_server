@@ -56,9 +56,14 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'));
 
+
+/*
+
+// Ya no es necesario
+
 app.listen(process.env.PORT || 1337, function() {
 	console.log('Puerto :' + (process.env.PORT || 1337))
-})
+})*/
 
 var pool = mysql.createPool({
 	connectionLimit: 10,
@@ -93,7 +98,7 @@ app.get('/', function(req, res) {
         }
       }
       qrcode.toDataURL(id, opts, function(err, url) {
-        console.log(url)
+        //console.log(url)
         res.render('pages/index', {'qrurl': url});
       })
     })
