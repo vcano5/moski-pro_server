@@ -73,7 +73,10 @@ app.get('/', function(req, res) {
   if(!cookie) {
     randomID(8, function(id) {
       console.log(id)
-      res.cookie('sesion', id);
+      res.cookie('sesion', id, {
+        maxAge: 0,
+        overwrite: true
+      });
       var opts = {
         errorCorrectionLevel: 'H',
         type: 'image/jpeg',
@@ -81,7 +84,7 @@ app.get('/', function(req, res) {
           quality: 0.9
         }
       }
-      qrcode.toDataURL(id, opts,  function(err, url) {
+      qrcode.toString(id, opts,  function(err, url) {
         console.log(url)
         res.render('pages/index', {'qrurl': url});
       })
