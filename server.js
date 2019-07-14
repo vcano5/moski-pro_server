@@ -73,6 +73,7 @@ app.get('/', function(req, res) {
 		console.log(id)
 	})
   qrcode.toDataURL('Fierro', function(err, url) {
+    console.log('El codigo qr esta en: ' + url)
     res.render('pages/index', {'qrurl': url});
   })
 })
