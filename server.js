@@ -316,8 +316,27 @@ async function analizarQR(url, callback) {
   }
 }
 
+async function reAnalizarQR(url) {
+  const img = await jimp.read(url)
+  const code = jsQR(img, img.bitmat.width, img.bitmat.height);
+  if(code) {
+    const qr = new QRReader();
+    const value = await new Promise((resolve, reject) => {
+      qr.callback = (err, v) => err != null ? reject(err) : resolve(v);
+      qr.decode(img.bitmap);
+    })
+    return('El codigo QR es: ' + value);
+  }
+  else {
+    return("No es un codigo QR");
+  }
+}
+
 app.get('/getQR', async function(req, res) {
-  analizarQR(req.query.url, function(valor) {
+  /*analizarQR(req.query.url, function(valor) {
     res.status(200).send(valor);
+  })*/
+  analizarQR(req.query.url).then(function(data) {
+    res.status(200).send(data);
   })
 })
