@@ -88,7 +88,7 @@ app.get('/', function(req, res) {
       }
       qrcode.toDataURL(id, opts, function(err, url) {
         console.log(url)
-        res.render('pages/index', {'qrurl': id});
+        res.render('pages/index', {'qrurl': url});
       })
     })
   }
