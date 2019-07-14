@@ -72,7 +72,9 @@ app.get('/', function(req, res) {
 	randomID(8, function(id) {
 		console.log(id)
 	})
-	res.render('pages/index');
+  qrcode.toDataURL('Fierro', function(err, url) {
+    res.render('pages/index', {'qr-url': url});
+  })
 })
 
 app.get('/newDevice', function(req, res) {
