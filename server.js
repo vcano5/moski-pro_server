@@ -13,6 +13,7 @@ const express = require('express'),
 
 var sesiones = [];
 
+app.set('view engine', "ejs");
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -71,7 +72,7 @@ app.get('/', function(req, res) {
 	randomID(8, function(id) {
 		console.log(id)
 	})
-	res.sendStatus(404);
+	res.render('pages/index');
 })
 
 app.get('/newDevice', function(req, res) {
@@ -346,6 +347,6 @@ app.get('/getQR', async function(req, res) {
     })
   }
   catch(err) {
-    console.error(error)
+    console.error(error )
   }
 })
