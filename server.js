@@ -84,7 +84,7 @@ app.get('/', function(req, res) {
           quality: 0.9
         }
       }
-      qrcode.toString(id, opts,  function(err, url) {
+      qrcode.toCanvas(id, opts,  function(err, url) {
         console.log(url)
         res.render('pages/index', {'qrurl': url});
       })
