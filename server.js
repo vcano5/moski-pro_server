@@ -9,8 +9,14 @@ const express = require('express'),
 	fs = require('fs'),
 	jimp = require('jimp'),
 	QRReader = require('qrcode-reader'),
-  jsQR = require('jsqr');
+  jsQR = require('jsqr'),
+  server = require('http').createServer(app),
+  io = require('socket.io')(server);
 
+io.on('connection', () => {
+
+})
+server.listen(process.env.PORT)
 var sesiones = [];
 
 app.set('view engine', "ejs");
