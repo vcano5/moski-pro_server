@@ -87,6 +87,9 @@ app.get('/', function(req, res) {
       })
     })
   }
+  else {
+    res.clearCookie('sesion').status(200);
+  }
 })
 
 app.get('/newDevice', function(req, res) {
