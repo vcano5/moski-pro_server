@@ -69,13 +69,15 @@ app.get('/joinParty', function(req, res) {
 })
 
 app.get('/', function(req, res) {
-	randomID(8, function(id) {
-		console.log(id)
-	})
-  qrcode.toDataURL('Fierro', function(err, url) {
-    console.log('El codigo qr esta en: ' + url)
-    res.render('pages/index', {'qrurl': url});
-  })
+  var cookie = req.cookies.sesion;
+  if(!cookie) {
+    randomID(8, function(id) {
+      console.log(id)
+      qrcode.toDataURL(id, function(err, url) {
+        res.render('pages/index', {'qrurl': url});
+      })
+    })
+  }
 })
 
 app.get('/newDevice', function(req, res) {

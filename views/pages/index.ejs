@@ -2,9 +2,20 @@
 <html>
 <head>
 	<title>Index.html</title>
+	<%- include ../partials/head.ejs %>
 </head>
 <body>
-	<img src="<%=qrurl%>">
-	<p>URL: <%=qrurl%></p>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg">
+				Columna grande
+			</div>
+			<div class="col-sm">
+				Columna pequeña
+				<img src="<%=qrurl%>">
+				Escanea este codigo para crear una fiesta
+			</div>
+		</div>
+	</div>
 </body>
 </html>
