@@ -336,7 +336,16 @@ app.get('/getQR', async function(req, res) {
   /*analizarQR(req.query.url, function(valor) {
     res.status(200).send(valor);
   })*/
-  analizarQR(req.query.url).then(function(data) {
+  /*analizarQR(req.query.url).then(function(data) {
     res.status(200).send(data);
-  })
+  })*/
+
+  try {
+    analizarQR(req.query.url).then(function(data) {
+      res.status(200).send(data);
+    })
+  }
+  catch(err) {
+    console.error(error)
+  }
 })
