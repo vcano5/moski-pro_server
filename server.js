@@ -73,7 +73,7 @@ app.get('/', function(req, res) {
 		console.log(id)
 	})
   qrcode.toDataURL('Fierro', function(err, url) {
-    res.render('pages/index', {'qr-url': url});
+    res.render('pages/index', {'qrurl': url});
   })
 })
 
