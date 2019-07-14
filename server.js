@@ -316,7 +316,7 @@ async function analizarQR(url, callback) {
   }
 }
 
-app.get('/getQR', function(req, res) {
+app.get('/getQR', async function(req, res) {
   analizarQR(req.query.url, function(valor) {
     res.status(200).send(valor);
   })
