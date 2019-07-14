@@ -73,6 +73,7 @@ app.get('/', function(req, res) {
   if(!cookie) {
     randomID(8, function(id) {
       console.log(id)
+      res.cookie('sesion', id);
       qrcode.toDataURL(id, function(err, url) {
         res.render('pages/index', {'qrurl': url});
       })
