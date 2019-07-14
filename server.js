@@ -80,11 +80,13 @@ app.get('/', function(req, res) {
       var opts = {
         errorCorrectionLevel: 'H',
         type: 'image/jpeg',
+        width: 2000,
+        scale: 6,
         rendererOpts: {
           quality: 0.9
         }
       }
-      qrcode.toFile((__dirname + '/qr/' + id + '.png'), id, function(err, url) {
+      qrcode.toDataURL(id, opts, function(err, url) {
         console.log(url)
         res.render('pages/index', {'qrurl': id});
       })
