@@ -84,15 +84,19 @@ app.get('/', function(req, res) {
           quality: 0.9
         }
       }
-      qrcode.toCanvas(id, opts,  function(err, url) {
+      qrcode.toFile((__dirname + '/qr/' + id + '.png'), id, function(err, url) {
         console.log(url)
-        res.render('pages/index', {'qrurl': url});
+        res.render('pages/index', {'qrurl': id});
       })
     })
   }
   else {
     res.clearCookie('sesion').status(200);
   }
+})
+
+app.get('/qr', function(req, res) {
+  res.sendFile(__dirname + '/qr/' + req.query.id + '.png')
 })
 
 app.get('/newDevice', function(req, res) {
