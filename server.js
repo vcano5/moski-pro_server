@@ -206,7 +206,8 @@ function handleMessage(sender_psid, received_message) {
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    readQR(attachment_url, function(fiesta) {
+    var fiesta = prueba(attachment_url)
+    //readQR(attachment_url, function(fiesta) {
       response = {
         "attachment": {
           "type": "template",
@@ -232,7 +233,7 @@ function handleMessage(sender_psid, received_message) {
           }
         }
       }
-    })
+    //})
   } 
   
   // Send the response message
@@ -279,6 +280,11 @@ function callSendAPI(sender_psid, response) {
   }); 
 }
 
+function prueba(uri) {
+  readQR(uri, function(callback){
+    return(callback)
+  })
+}
 
 async function readQR(uri, callback) {
   const img = await jimp.read(uri);
