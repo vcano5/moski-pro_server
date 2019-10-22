@@ -1,0 +1,5 @@
+{
+	"mensajes": {
+		"bienvenida": ["Bienvenido $user", "Por favor escanea este codigo para iniciar", "Paso 1"]
+	}
+}
